@@ -1,0 +1,43 @@
+<img src="" id="imgPokemon">
+<h1 id="nomePokemon"></h1>
+<p>Pokedex: 
+    <pokedex></pokedex>
+</p>
+
+<form>
+    <label for="fname">Nome do pokemon:</label><br>
+    <input type="text" id="Pokemon" value=""><br><br>
+    <input type="submit" value="Procurar">
+  </form>
+
+<script>
+
+
+async function buscaPokemon() {
+    const url = "https://pokeapi.co/api/v2/pokemon/pikachu";
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+  
+      const json = await response.json();
+      
+      console.log(json.name);
+
+      console.log(json.id);
+
+      console.log(json.sprites.other.dream_world.front_default);
+
+      document.getElementById('nomePokemon').innerText = json.name;
+      document.getElementsByTagName('pokedex')[0].innerText = json.id;
+      document.getElementById('imgPokemon').src = json.sprites.other.dream_world.front_default;
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  buscaPokemon(); //executar a função
+
+</script>
